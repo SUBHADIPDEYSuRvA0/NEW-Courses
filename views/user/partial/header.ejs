@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>DEMO WEB</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/user/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/user/assets/css/templatemo-space-dynamic.css">
+    <link rel="stylesheet" href="/user/assets/css/animated.css">
+    <link rel="stylesheet" href="/user/assets/css/owl.css">
+<!--
+    
+TemplateMo 562 DEMO WEB
+
+https://templatemo.com/tm-562-space-dynamic
+
+-->
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <h4>DEMO<span>LOGO</span></h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="/about">About Us</a></li>
+              <li class="scroll-to-section"><a href="/courses">Courses</a></li>
+              <li class="scroll-to-section"><a href="/profile">Student Dashboard</a></li>
+              <li class="scroll-to-section"><a href="/contact">Contact Us</a></li> 
+              <!-- Include Lottie Script -->
+              <% if (!user) { %>
+                <!-- Login Button -->
+                <li class="btn rounded-pill" style="background-color: black; color: aliceblue;">
+                  <a href="/login" style="background-color: transparent; display: flex; align-items: center; gap: 8px; color: aliceblue;">
+                    <dotlottie-player 
+                      src="https://lottie.host/c786c55d-44a2-4276-ae00-3dfde636dbd0/N3cL76vp7m.lottie" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 24px; height: 24px;" 
+                      loop 
+                      autoplay>
+                    </dotlottie-player>
+                    Login
+                  </a>
+                </li>
+              <% } else { %>
+                <!-- Logout Button -->
+                <li class="btn rounded-pill" style="background-color: rgb(57, 112, 119); color: rgb(0, 0, 0);">
+                  <a href="/auth/logout" style="background-color: transparent; display: flex; align-items: center; gap: 8px; color: aliceblue;">
+                    Logout
+                    <dotlottie-player 
+                      src="https://lottie.host/c4520ca8-eabe-4757-a24c-ca90cbb485c9/BJGDUwpekY.lottie" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 35px; height: 35px;" 
+                      loop 
+                      autoplay>
+                    </dotlottie-player>
+                  </a>
+                </li>
+              <% } %>
+              
+              
+              
+              
+              <!-- Include this in the <head> or before </body> -->
+              <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+              
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->

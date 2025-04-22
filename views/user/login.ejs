@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>DEMO WEB</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/user/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/user/assets/css/templatemo-space-dynamic.css">
+    <link rel="stylesheet" href="/user/assets/css/animated.css">
+    <link rel="stylesheet" href="/user/assets/css/owl.css">
+<!--
+    
+TemplateMo 562 DEMO WEB
+
+https://templatemo.com/tm-562-space-dynamic
+
+-->
+  </head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <h4>DEMO<span>LOGO</span></h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="/about">About Us</a></li>
+              <li class="scroll-to-section"><a href="/courses">Courses</a></li>
+              <li class="scroll-to-section"><a href="/profile">Student Dashboard</a></li>
+              <li class="scroll-to-section"><a href="/contact">Contact Us</a></li> 
+              <!-- Include Lottie Script -->
+            
+                <!-- Login Button -->
+                <li class="btn rounded-pill" style="background-color: black; color: aliceblue;">
+                  <a href="/login" style="background-color: transparent; display: flex; align-items: center; gap: 8px; color: aliceblue;">
+                    <dotlottie-player 
+                      src="https://lottie.host/c786c55d-44a2-4276-ae00-3dfde636dbd0/N3cL76vp7m.lottie" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 24px; height: 24px;" 
+                      loop 
+                      autoplay>
+                    </dotlottie-player>
+                    Login
+                  </a>
+                </li>
+             
+              
+              
+              
+              
+              <!-- Include this in the <head> or before </body> -->
+              <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+              
+            </ul>        
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+
+  .bg-image {
+    animation: gradientBG 10s ease infinite;
+    background: linear-gradient(-45deg, #a7f2fc, #33c0f7, #fc3b42, #f8afaf);
+    background-size: 400% 400%;
+    background-position: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 20px;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .toggle-btns {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 10px;
+  }
+
+  .toggle-btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+    border-color: #0051ff;
+    background-color: transparent;
+    color: #ff4800;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .toggle-btn.active,
+  .toggle-btn:hover {
+    background-color: #00b7ff;
+    color: #fff;
+  }
+
+  .form-box {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .form-box.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  input.form-control {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 10px;
+  }
+
+  input.form-control:focus {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+    border-color: #007bff;
+  }
+
+  button:focus {
+    box-shadow: none !important;
+  }
+
+  .welcome-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 767.98px) {
+    .bg-image {
+      display: none !important;
+    }
+
+    .form-container {
+      margin-top: 40px;
+    }
+  }
+  .toast-container {
+
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    .toast-custom-success {
+    background-color: #004ffa; /* Bootstrap success green */
+    color: white;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <!-- Left: Animation -->
+    <div class="col-md-6 d-none d-md-flex bg-image">
+      <dotlottie-player
+        src="https://lottie.host/57255328-9a79-4dce-b7be-b37fbe5b0dd1/QysgF8cmfy.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 400px; height: 400px"
+        loop
+        autoplay>
+      </dotlottie-player>
+      <div class="welcome-text">Welcome to Learning Portal</div>
+    </div>
+    <% if (message) { %>
+      <div class="toast-container">
+        <div id="toastMessage" class="toast toast-custom-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <%= message %>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+      
+    <% } %>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Show toast automatically if message exists
+      const toastEl = document.getElementById('toastMessage');
+      if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        toast.show();
+      }
+    </script>
+    <!-- Right: Forms -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center bg-light overflow-auto">
+      <div class="form-container">
+        <!-- Toggle Buttons -->
+        <div class="toggle-btns">
+          <button type="button" class="toggle-btn active" id="showLogin">Login</button>
+          <button type="button" class="toggle-btn" id="showSignup">Signup</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="form-box active">
+          <h3 class="text-center mb-3">Login</h3>
+          <form action="/auth/login" method="POST">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="loginEmail" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="loginPassword" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 rounded-pill">Login</button>
+          </form>
+        </div>
+<!-- Signup Form -->
+<div id="signupForm" class="form-box">
+  <h3 class="text-center mb-3">Signup</h3>
+  <form id="signupFormAction" action="/auth/sighnup" method="POST">
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label for="signupName" class="form-label">Full Name:</label>
+      <input type="text" class="form-control" id="signupName" name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="signupName" class="form-label">Phone:</label>
+      <input type="number" class="form-control" id="signupName" name="phone" required>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="signupEmail" class="form-label">Email:</label>
+      <input type="email" class="form-control" id="signupEmail" name="email" required>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label for="signupPassword" class="form-label">Password:</label>
+      <input type="password" class="form-control" id="signupPassword" name="password" required>
+    </div>
+
+    <!-- OTP -->
+    <div class="mb-3">
+      <label for="otp" class="form-label">Enter OTP:</label>
+      <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" disabled required>
+    </div>
+
+    <!-- Send OTP Button -->
+    <div class="mb-3 text-center">
+      <button type="button" class="btn btn-primary" id="sendOtpBtn">Send OTP</button>
+    </div>
+
+    <!-- Toggle Referral Code Button -->
+    <div class="mb-3 text-center">
+      <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleReferral()">Have a referral code?</button>
+    </div>
+
+    <!-- Hidden Referral Code Input -->
+    <div class="mb-3 d-none" id="referralField">
+      <label for="referralCode" class="form-label">Referral Code:</label>
+      <input type="text" class="form-control" id="referralCode" name="referralCode">
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-success w-100 rounded-pill" id="submitBtn" disabled>Sign Up</button>
+  </form>
+</div>
+
+<!-- Script to toggle referral field -->
+<script>
+  function toggleReferral() {
+    const referralDiv = document.getElementById("referralField");
+    referralDiv.classList.toggle("d-none");
+  }
+
+  // Send OTP logic
+  document.getElementById("sendOtpBtn").addEventListener("click", function() {
+    const email = document.getElementById("signupEmail").value;
+    
+    if (email) {
+      // Trigger Send OTP API
+      fetch('/auth/sendOtp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message === "OTP sent to email") {
+          alert("OTP sent to your email");
+          // Enable OTP input and Submit button
+          document.getElementById("otp").disabled = false;
+          document.getElementById("submitBtn").disabled = false;
+        } else {
+          alert("Error sending OTP: " + data.message);
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("There was an error sending the OTP.");
+      });
+    } else {
+      alert("Please enter a valid email address.");
+    }
+  });
+</script>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partial/footer') %>
+
+<script>
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const showLogin = document.getElementById('showLogin');
+  const showSignup = document.getElementById('showSignup');
+
+  showLogin.addEventListener('click', () => {
+    loginForm.classList.add('active');
+    signupForm.classList.remove('active');
+    showLogin.classList.add('active');
+    showSignup.classList.remove('active');
+  });
+
+  showSignup.addEventListener('click', () => {
+    signupForm.classList.add('active');
+    loginForm.classList.remove('active');
+    showSignup.classList.add('active');
+    showLogin.classList.remove('active');
+  });
+</script>

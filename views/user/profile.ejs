@@ -1,0 +1,465 @@
+<%- include('partial/header') %>
+
+<style>
+    .card-hover:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+    }
+
+    .referral-card {
+        background: linear-gradient(145deg, #00c6ff, #0072ff);
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .referral-card h5 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .referral-card .referral-code {
+        font-size: 1.25rem;
+        font-weight: bold;
+        background-color: #ffffff;
+        color: #333;
+        border-radius: 8px;
+        padding: 8px;
+        margin: 10px 0;
+    }
+
+    .referral-card button {
+        background-color: #ff6347;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin-top: 15px;
+    }
+
+    .wallet-card {
+        background: linear-gradient(145deg, #ff7f50, #ff6347);
+        color: white;
+    }
+
+    .wallet-card .amount {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .wallet-card .wallet-details {
+        font-size: 0.9rem;
+    }
+
+    .wallet-card button {
+        background-color: #ff6347;
+        color: white;
+        font-weight: bold;
+    }
+
+    .history-table th,
+    .history-table td {
+        vertical-align: middle;
+    }
+
+    .copy-btn,
+    .share-btn {
+        margin-top: 10px;
+    }
+    .toast-container {
+
+position: fixed;
+top: 20px;
+right: 20px;
+z-index: 9999;
+}
+.toast-custom-success {
+background-color: #004ffa; /* Bootstrap success green */
+color: white;
+font-weight: bold;
+}
+</style>
+<% if (message) { %>
+    <div class="toast-container">
+      <div id="toastMessage" class="toast toast-custom-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            <%= message %>
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+    
+  <% } %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Show toast automatically if message exists
+    const toastEl = document.getElementById('toastMessage');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+      toast.show();
+    }
+  </script>
+<div class="container py-5">
+    <h2 class="text-center mb-4">My Profile</h2>
+<% if(me){ %>
+    <!-- Profile Information -->
+    <div class="card shadow p-4 mb-4" style="background-color: #f1f8e9; border-radius: 10px; border: 2px solid #4caf50;">
+        <h5 class="card-title text-center mb-3" style="color: #388e3c;">My Information</h5>
+        <div class="d-flex flex-column align-items-center">
+            <div class="text-center" style="color: #4caf50;">
+                <p><strong>Name:</strong> <%= me.name %></p>
+                <p><strong>Email:</strong> <%= me.email %></p>
+                <p><strong>Phone:</strong> <%= me.phone %></p>
+                <p><strong>Address:</strong> 123 Main Street, City, Country</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Referral and Wallet Section -->
+    <div class="row mb-4">
+        <!-- Wallet -->
+        <div class="col-md-6 d-flex align-items-stretch">
+            <div class="card shadow p-4 wallet-card w-100 h-100" style="background-color: #f1f8e9; border-radius: 10px;">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>My Wallet</h5>
+                        <small class="wallet-details">Total balance in your wallet</small>
+                    </div>
+                    <div class="amount"><%= me.mybonus %></div>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                        <button class="btn btn-success w-48" onclick="addMoney()">Add Money</button>
+                        <button class="btn btn-danger w-48" onclick="withdrawMoney()">Withdraw</button>
+                  
+                    
+                        <script>
+                            // Function to handle "Add Money"
+                            async function addMoney() {
+                                const amount = "<%= me.mybonus %>"; // Dynamically set the amount from mybonus
+                                const userId = '<%= me._id %>'; // Use the actual user ID from the `me` object
+                                const courseId = 'course-id'; // Use the actual course ID, if required
+                        
+                                // Call your backend to create a Razorpay order
+                                const response = await fetch('/api/payment/create', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ userId, courseId, amount })
+                                });
+                        
+                                const data = await response.json();
+                        
+                                if (data.orderId) {
+                                    const options = {
+                                        key: 'YOUR_RAZORPAY_KEY_ID', // Your Razorpay key
+                                        amount: data.amount * 100, // Amount in paise (Razorpay expects amount in paise)
+                                        currency: data.currency,
+                                        name: 'Your Platform Name', // Replace with your platform name
+                                        order_id: data.orderId,
+                                        handler: function(response) {
+                                            verifyPayment(response);
+                                        },
+                                        prefill: {
+                                            name: '<%= me.name %>', // Dynamically set user's name
+                                            email: '<%= me.email %>', // Dynamically set user's email
+                                        },
+                                        theme: {
+                                            color: '#528FF0'
+                                        }
+                                    };
+                        
+                                    const rzp1 = new Razorpay(options);
+                                    rzp1.open(); // Open Razorpay payment modal
+                                } else {
+                                    alert('Failed to create payment order.');
+                                }
+                            }
+                        
+                            // Function to verify payment after the user completes the payment
+                            async function verifyPayment(response) {
+                                const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = response;
+                                
+                                const data = {
+                                    paymentId: razorpay_payment_id,
+                                    razorpay_order_id,
+                                    razorpay_signature
+                                };
+                        
+                                // Verify the payment by sending the data to your backend
+                                const verificationResponse = await fetch('/api/payment/verify', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(data)
+                                });
+                        
+                                const verificationData = await verificationResponse.json();
+                        
+                                if (verificationData.message) {
+                                    alert(verificationData.message);
+                                } else {
+                                    alert('Payment verification failed.');
+                                }
+                            }
+                        </script>
+                        
+                    
+                </div>
+            </div>
+        </div>
+    
+        <!-- Referral Money Wallet -->
+        <div class="col-md-6 d-flex align-items-stretch">
+            <div class="card shadow p-3 referral-wallet-card w-100 h-100" style="background: linear-gradient(145deg, #3b5998, #8b9dc3); color: white; border-radius: 10px;">
+                <h5>Referral Money Wallet</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p><strong>Referral Balance</strong></p>
+                        <p style="font-size: 16px; margin: 10px 0; color: #333;">
+                            <strong>Referral Code:</strong>
+                            <b style="background-color: #f0f0f0; padding: 4px 8px; border-radius: 6px; color: #1a73e8;">
+                              <%= me.myReferralCode || "" %>
+                            </b>
+                          </p>
+                        <% if (refferalbonus) {%>
+                          
+                        <h4>₹<%= refferalbonus.referalbonus %> / <%= refferalbonus.usercount %> User</h4>
+
+                        <% } %>
+                    </div>
+                    <div>
+                    <!-- Your button to copy the referral code -->
+<button class="btn btn-sm btn-outline-light copy-btn" onclick="copyReferralCode()">
+    <i class="fas fa-copy"></i> Copy Code
+</button>
+
+<script>
+    // Function to copy the referral code message to the clipboard
+    function copyReferralCode() {
+        const referralCode = "<%= me && me.myReferralCode ? me.myReferralCode : '' %>";
+        const referredBy = "<%= me && me.name ? me.name : '' %>";
+
+        if (!referralCode || !referredBy) {
+            alert("Referral info missing.");
+            return;
+        }
+
+        // Construct the full message
+        const fullMessage = `https://yourdomain.com/signup\n\nReffer by ${referredBy} and My Refferal code is = ${referralCode}`;
+
+        // Try to copy the message to the clipboard
+        navigator.clipboard.writeText(fullMessage).then(() => {
+            alert('Referral message copied to clipboard!');
+        }).catch(err => {
+            console.error(err);
+            alert('Error copying referral message: ' + err);
+        });
+    }
+</script>
+
+                    </div>
+                </div>
+                <% if (refferalbonus) {%>
+                <p class="text-bold mb-3">Earn ₹<%= refferalbonus.referalbonus %> for each successful referral!</p>
+                
+                <% } %>
+                <button class="btn btn-outline-light w-100" onclick="shareReferralCode()">Invite Now</button>
+            </div>
+        </div>
+    </div>
+    
+    <% } %>
+    <!-- Withdrawal History -->
+    <div class="card shadow mb-4 p-4">
+        <h5>💰 Withdrawal History</h5>
+        <table class="table table-striped table-bordered history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10 April 2025</td>
+                    <td>₹500</td>
+                    <td><span class="badge bg-success">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>5 April 2025</td>
+                    <td>₹300</td>
+                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>1 April 2025</td>
+                    <td>₹200</td>
+                    <td><span class="badge bg-danger">Failed</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Quick Links (Modals) -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow card-hover" data-bs-toggle="modal" data-bs-target="#myCoursesModal">
+                <h6>🎓 My Courses</h6>
+                <small>View your enrolled courses</small>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow card-hover" data-bs-toggle="modal" data-bs-target="#savedVideosModal">
+                <h6>🎥 Saved Videos</h6>
+                <small>Watch saved video content</small>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow card-hover" data-bs-toggle="modal" data-bs-target="#examsModal">
+                <h6>📝 Exams</h6>
+                <small>Check your upcoming exams</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Results -->
+    <div class="card shadow p-4">
+        <h5 class="mb-3">📊 Exam Results</h5>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+                <div>
+                    <strong>Mathematics</strong><br />
+                    <small class="text-muted">Score: 92%</small>
+                </div>
+                <span class="badge bg-success">Passed</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <div>
+                    <strong>English</strong><br />
+                    <small class="text-muted">Score: 85%</small>
+                </div>
+                <span class="badge bg-success">Passed</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <div>
+                    <strong>Science</strong><br />
+                    <small class="text-muted">Score: 68%</small>
+                </div>
+                <span class="badge bg-warning text-dark">Average</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Copy and Share Functions -->
+
+
+
+<!-- Modals -->
+<!-- My Courses Modal -->
+<div class="modal fade" id="myCoursesModal" tabindex="-1" aria-labelledby="myCoursesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCoursesModalLabel">My Courses</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Here are your enrolled courses:</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Course 1: Web Development</li>
+                    <li class="list-group-item">Course 2: Data Science</li>
+                    <li class="list-group-item">Course 3: Digital Marketing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Saved Videos Modal -->
+<div class="modal fade" id="savedVideosModal" tabindex="-1" aria-labelledby="savedVideosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="savedVideosModalLabel">Saved Videos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Here are your saved videos:</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Video 1: Introduction to HTML</li>
+                    <li class="list-group-item">Video 2: JavaScript Basics</li>
+                    <li class="list-group-item">Video 3: Advanced CSS Techniques</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Exams Modal -->
+<div class="modal fade" id="examsModal" tabindex="-1" aria-labelledby="examsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="examsModalLabel">Exams</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Upcoming exams:</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Math Exam: 12th April</li>
+                    <li class="list-group-item">Science Exam: 15th April</li>
+                    <li class="list-group-item">English Exam: 20th April</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function shareReferralCode() {
+        const referralCode = "<%= me && me.myReferralCode ? me.myReferralCode : '' %>";
+        const referredBy = "<%= me && me.name ? me.name : '' %>";
+    
+        if (!referralCode || !referredBy) {
+            alert("Referral info missing.");
+            return;
+        }
+    
+        const fullMessage = `https://yourdomain.com/signup\n\nReffer by ${referredBy} and My Refferal code is = ${referralCode}`;
+    
+        if (navigator.share) {
+            navigator.share({
+                title: 'Join Our Learning Platform',
+                text: fullMessage
+                // no 'url' field here!
+            }).then(() => {
+                alert('Shared successfully!');
+            }).catch(err => {
+                console.error(err);
+                alert('Error sharing: ' + err);
+            });
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(fullMessage).then(() => {
+                alert('Sharing not supported. Message copied!');
+            }).catch(err => {
+                alert('Could not copy message: ' + err);
+            });
+        }
+    }
+    </script>
+    
+
+
+
+
+
+
+
+<%- include('partial/footer') %>

@@ -1,0 +1,87 @@
+<%- include('partial/header') %>
+<style>
+  .toast-container {
+
+position: fixed;
+top: 20px;
+right: 20px;
+z-index: 9999;
+}
+.toast-custom-success {
+background-color: #004ffa; /* Bootstrap success green */
+color: white;
+font-weight: bold;
+}
+</style>
+<% if (message) { %>
+  <div class="toast-container">
+    <div id="toastMessage" class="toast toast-custom-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <%= message %>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  
+<% } %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Show toast automatically if message exists
+  const toastEl = document.getElementById('toastMessage');
+  if (toastEl) {
+    const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+    toast.show();
+  }
+</script>
+<!-- Lottie Script -->
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+<div class="container" style=" height: 15vh;">
+
+</div>
+<div class="container" style=" padding: 4rem 1rem;">
+  <div class="row align-items-center">
+    
+    <!-- Left Column: Image -->
+    <div class="col-md-4 mb-4 mb-md-0">
+      <div style="width: 100%; max-width: 100%;">
+        <img 
+        src="/user/assets/images/image.png" 
+        alt="About Us Image" 
+        style="width: 100%; border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);">
+      
+      </div>
+    </div>
+
+    <!-- Middle Column: Text -->
+    <div class="col-md-4 mb-4 mb-md-0">
+      <div>
+        <h2 style="color: #3f51b5; font-weight: bold; margin-bottom: 1rem;">About Us</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 1rem;">
+          We are a passionate team dedicated to delivering innovative digital solutions. 
+          Our mission is to empower users through intuitive designs and powerful technology.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 1rem;">
+          Whether you're a student, educator, or professional — our platform supports your journey with integrity and creativity.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Column: Animation -->
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <dotlottie-player
+        src="https://lottie.host/aecef82e-f67c-48ba-a4dd-5b822ed13e41/ErQ3M1ykAq.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 100%; max-width: 300px; height: 300px;"
+        loop
+        autoplay>
+      </dotlottie-player>
+    </div>
+  </div>
+</div>
+
+<%- include('partial/footer') %>
