@@ -15,7 +15,7 @@ class contactcontroller{
 
         await newcontact.save()
 
-        res.redirect("#")
+        res.redirect("localhost:3000/contact#")
     }
 }
 
